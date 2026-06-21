@@ -1,4 +1,4 @@
-# 模型权重目录（不提交 Git）
+# 模型权重目录
 
 ## DeepSeek / LLM（step4、step5）
 
