@@ -1,4 +1,4 @@
-# E-MDD Workflow
+# E-MDD: Explainable EEG-to-LLM Workflow for Depression Diagnosis
 
 **E-MDD**（Explainable MDD diagnosis）是一个端到端可解释抑郁症辅助诊断框架。系统首先利用 **EEGPT** 提取脑电表征并完成 **MDD 分类**，然后通过 **SHAP** 获取关键决策特征，进一步建立潜在特征与脑区、频段 **PSD** 特征之间的映射关系，实现神经生理层面的解释。最后通过 **EEG→LLM Projector** 将脑电表征映射到语言空间，结合 **Chain-of-Thought** 推理生成符合临床认知逻辑的诊断解释报告。
 
