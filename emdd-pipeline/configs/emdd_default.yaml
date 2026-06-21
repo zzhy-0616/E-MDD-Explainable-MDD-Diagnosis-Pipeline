@@ -1,0 +1,75 @@
+project:
+  name: E-MDD
+  description: >
+    E-MDD architecture workflow — MATLAB preprocessing → EEGPT encoder →
+    classification head → SHAP XAI → LLM CoT.
+
+paths:
+  ica_set_dir: "data/eeg/ica"
+  epoch_6_dir: "data/eeg/epoch_6"
+  train_set_dir: "data/eeg/train_6"
+  test_set_dir: "data/eeg/test_6"
+  train_norm_dir: "data/eeg/train_norm_6"
+  test_norm_dir: "data/eeg/test_norm_6"
+  raw_eeg: "data/eeg/train_6"
+  features: "emdd_core/features"
+  mne_csv: "emdd_core/subject_power_with_asym.csv"
+  step3_root: "emdd_core"
+  step3_dir: "emdd_core/artifacts/classification"
+  step3_train_features: "emdd_core/features/fold_train"
+  step3_test_features: "emdd_core/features/fold_val"
+  step4_root: "emdd_core"
+  step4_projector: "emdd_core/artifacts/projector"
+  step5_root: "llm_explanation"
+  step5_output: "llm_explanation/outputs/cot/test_epoch_cot.csv"
+  deepseek_model: "models/deepseek-7b"
+  runs_dir: "runs"
+  eval_output_dir: "emdd_core/artifacts/external_eval"
+  external_test_csv: "emdd_core/subject_power_with_asym_test.csv"
+  external_test_features: "emdd_core/features_test"
+
+matlab_preprocess:
+  enabled: false
+  executable: ""
+  eeglab_init: "eeglab nogui;"
+  run_ica: false
+  ica_script: ""
+  run_epoch_6s: true
+  epoch_window_sec: 6
+  epoch_overlap: 0.5
+  run_split: true
+  train_ratio: 0.7
+  random_seed: 42
+  run_znorm: false
+
+eegpt_encoder:
+  root: "vendor/EEGPT"
+  checkpoint: "vendor/EEGPT/checkpoint/eegpt_mcae_58chs_4s_large4E.ckpt"
+
+scripts:
+  step3: "emdd_core/step3_classify_shap.py"
+  step4: "emdd_core/step4_train_projector.py"
+  step5: "llm_explanation/step5_generate_cot.py"
+  eval: "emdd_core/eval_external_test.py"
+
+artifacts:
+  classification:
+    checkpoint: "best_classifier.pth"
+    best_fold_train_epochs: "best_fold_train_epochs.csv"
+    best_fold_test_epochs: "best_fold_test_epochs.csv"
+    best_fold_train_subjects: "best_fold_train_subjects.csv"
+    best_fold_test_subjects: "best_fold_test_subjects.csv"
+  projector:
+    checkpoint: "best_eeg_projector.pth"
+  cot:
+    test_epochs: "test_epoch_cot.csv"
+
+step5:
+  samples_hc: 4
+  samples_mdd: 16
+  random_seed: 21
+
+eval:
+  test_csv: "emdd_core/subject_power_with_asym_test.csv"
+  features_dir: "emdd_core/features_test"
+  features_zip: "emdd_core/features_test.zip"
