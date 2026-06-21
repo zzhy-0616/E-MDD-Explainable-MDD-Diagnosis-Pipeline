@@ -2,11 +2,11 @@
 
 **E-MDD**（Explainable MDD diagnosis）端到端架构：**EEGPT 脑电编码器** → 分类头 → XAI（SHAP）→ LLM CoT 可解释推理。
 
-> 本目录为 **GitHub 发布包**（专业目录命名、相对路径、无日期文件夹）。本地开发树若仍使用 `0419/`、`0420/` 等历史目录，请以此包为准上传。
+> 本目录为 **GitHub 发布包**（专业目录命名、相对路径、无日期文件夹）。
 
 ---
 
-## 亮点（招聘向摘要）
+## 亮点
 
 - **完整 pipeline 编排**：`step0~step5 + eval` 一键/分步运行，带依赖检查与运行日志
 - **被试级 5 折交叉验证**：`StratifiedGroupKFold`，避免同一被试泄露
@@ -91,7 +91,6 @@ python emdd_workflow.py run --all --dry-run
 | EEGNet512 | 0.894 | 0.765 |
 | EEGConformer512 | 0.857 | 0.824 |
 
-详见 [`docs/sample_outputs.md`](docs/sample_outputs.md)。演示录屏稿：[`docs/video_demo_script.md`](docs/video_demo_script.md)。
 
 ---
 
