@@ -1,4 +1,4 @@
-# 数据目录（不提交 Git）
+# 数据目录
 
 预处理后的 EEG 与中间文件建议放在此目录下，与 `configs/emdd_default.yaml` 默认路径一致：
 
